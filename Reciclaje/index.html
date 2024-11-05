@@ -1,0 +1,498 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link rel="icon" href="imagen/logo.png" type="image/png" />
+    <title>EcoPasto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <div
+      id="menu-lectura"
+      style="
+        display: none;
+        position: absolute;
+        background-color: #f2f2f2;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      "
+    >
+      <button
+        id="leer-seleccion"
+        style="
+          background-color: #04879c;
+          color: white;
+          border: none;
+          padding: 5px 10px;
+          cursor: pointer;
+        "
+      >
+        Leer en voz alta
+      </button>
+    </div>
+
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+      }
+      h1,
+      .playfair-font {
+        font-family: "Playfair Display", serif;
+      }
+
+      .carousel {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+      }
+      .carousel-item {
+        flex: none;
+        scroll-snap-align: start;
+        margin-right: 1rem;
+      }
+
+      /* Estilos del chatbot */
+      #chatbot {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+      }
+
+      #chat-icon {
+        font-size: 40px;
+        background-color: #04879c;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      #chat-window {
+        border: 1px solid #055e68;
+        border-radius: 5px;
+        padding: 10px;
+        background: white;
+        position: absolute;
+        bottom: 60px;
+        right: 0;
+        width: 300px;
+        display: none;
+      }
+
+      #messages {
+        max-height: 200px;
+        overflow-y: auto;
+      }
+
+      #user-input {
+        width: 70%;
+      }
+
+      /* Clase para aumentar el tamaño del texto */
+      .body.accessibility-mode {
+        background-color: #000; /* Fondo oscuro */
+        color: #fff; /* Texto blanco */
+        font-size: 1.5em; /* Aumentar el tamaño del texto */
+      }
+
+      .accessibility-mode h1,
+      .accessibility-mode h2,
+      .accessibility-mode h3 {
+        font-size: 2em; /* Aumentar el tamaño de los encabezados */
+      }
+
+      /* Otros estilos de accesibilidad si es necesario */
+    </style>
+  </head>
+  <body class="bg-gray-100">
+   <!-- Header -->
+<header class="bg-green-900 shadow-sm fixed top-0 left-0 w-full z-50">
+  <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+      <div class="relative" onclick="window.location.href='EcoPasto.html'">
+          <button class="flex items-center">
+              <img src="imagen/logo.png" alt="EcoPasto Logo" class="w-10 h-10 hover:scale-110 transition-transform duration-300" />
+          </button>
+      </div>
+      
+      <nav class="hidden md:flex space-x-4 flex-grow justify-center">
+          <a class="text-white hover:text-green-800 font-sans" href="Programas de Reciclaje.html">Programas de reciclaje</a>
+          <a class="text-white hover:text-green-800 font-sans" href="Mapeo de Contenedores.html">Mapa de Contenedores</a>
+          <a class="text-white hover:text-green-800 font-sans" href="Horarios de Recolección.html">Horario de recolección</a>
+          <a class="text-white hover:text-green-800 font-sans" href="#">Reportes de incidencias</a>
+
+          <div class="relative inline-block text-left">
+              <button class="text-white hover:text-green-800 font-sans" id="dropdownMenuButton" aria-haspopup="true">
+                  Servicio al cliente
+              </button>
+
+              <!-- Lista desplegable -->
+              <div class="hidden dropdown-menu origin-top-right absolute right-0 mt-1 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5" aria-labelledby="dropdownMenuButton">
+                  <div class="py-1">
+                      <a href="#" class="block px-4 py-1 text-gray-700 hover:bg-green-100 hover:text-green-800">Atención al cliente</a>
+                      <a href="#" class="block px-4 py-1 text-gray-700 hover:bg-green-100 hover:text-green-800">Rutas de aseo</a>
+                      <a href="#" class="block px-4 py-1 text-gray-700 hover:bg-green-100 hover:text-green-800">Conoce tu factura</a>
+                  </div>
+              </div>
+          </div>
+      </nav>
+
+      <div class="relative">
+          <button class="text-white hover:text-green-800 flex items-center" id="dropdownButton">
+              <i class="fas fa-bars fa-lg"></i>
+          </button>
+          <div class="absolute right-0 mt-1 w-32 bg-white border rounded shadow-lg hidden" id="dropdownMenu">
+              <a href="Login.html" class="flex items-center p-2 text-gray-700 hover:bg-green-100 hover:text-green-800">
+                  <i class="fas fa-user mr-2"></i>
+                  <span class="text-sm">Iniciar Sesión</span>
+              </a>
+          </div>
+      </div>
+  </div>
+</header>
+
+<!-- Espaciado para el contenido -->
+<div class="pt-16"> <!-- Asegura que el contenido no quede debajo del header (ajusta el valor según la altura del header) -->
+  <!-- Contenido de la página -->
+</div>
+
+<!-- Script de JavaScript -->
+<script>
+  const button = document.getElementById('dropdownButton');
+  const dropdown = document.getElementById('dropdownMenu');
+
+  button.addEventListener('click', function(event) {
+      event.stopPropagation();
+      dropdown.classList.toggle('hidden');
+  });
+
+  window.addEventListener('click', function(event) {
+      if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+          dropdown.classList.add('hidden');
+      }
+  });
+</script>
+
+  
+  
+    <main class="container mx-auto px-4 py-8">
+      <div class="flex flex-col md:flex-row items-center justify-between">
+        <div class="md:w-1/2">
+          <h1
+            class="text-5xl md:text-6xl font-bold text-gray-900 leading-tight"
+          >
+            EcoPasto<br />
+            Aprende, Recicla, <span class="text-green-900">Impacta</span>
+          </h1>
+          <p class="mt-4 text-gray-600">
+            En EcoPasto promovemos el poder de las tres R de reducir, reutilizar
+            y reciclar.
+            <br />
+            Al reducir el consumo evitamos generar más residuos, reutilizando<br />
+            prolongamos la vida de los productos,y al reciclar transformamos<br />
+            materiales en nuevos recursos. Juntos podemos construir un futuro.
+          </p>
+          <div class="mt-6 flex space-x-4">
+            <a
+              href="TipodeUsuario.html"
+              class="bg-green-900 text-white px-6 py-3 rounded-full"
+            >
+              Registrate aquí
+            </a>
+          </div>
+          <div class="mt-6 flex flex-wrap gap-2">
+            <a
+              href="https://regiondemurcialimpia.es/fracciones-reciclaje/reciclar-papel"
+              class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full"
+            >
+              Papel y cartón
+            </a>
+
+            <a
+              href="https://regiondemurcialimpia.es/fracciones-reciclaje/reciclar-envases"
+              class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full"
+            >
+              Envases de vidrio y plástico
+            </a>
+            <a
+              href="https://regiondemurcialimpia.es/fracciones-reciclaje/reciclar-vidrio"
+              class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full"
+            >
+              Vidrio
+            </a>
+          </div>
+        </div>
+        <div class="md:w-1/2">
+          <img
+            alt="Persona sonriendo junto a un camión de basura con un cartel que dice 'EMAS PASO POR AQUÍ BASURA QUE NO LA VI' y el logo de EMAS by Veolia"
+            class="rounded-lg shadow-lg"
+            height="400"
+            src="imagen/narin-o-reverdece-con-agrosavia_agrosavia.jpg"
+            width="600"
+          />
+        </div>
+      </div>
+    </main>
+
+    <!-- Segunda Sección: Carrusel de Compostaje -->
+    <section
+      id="compostaje"
+      class="mx-auto px-4 py-8"
+      style="background-color: E7F0DC"
+    >
+      <h2
+        class="text-2xl font-bold mb-6 text-center"
+        style="font-family: 'Merriweather', serif"
+      >
+        Empieza por acá - Guía para aprender a reciclar.
+      </h2>
+
+      <div class="carousel">
+        <!-- Primera Tarjeta -->
+        <div
+          class="carousel-item relative bg-white shadow-lg rounded-lg overflow-hidden"
+        >
+          <iframe
+            class="w-full h-48"
+            src="https://www.youtube.com/embed/eDFECiSBgd0"
+            title="Como reciclar en casa: ¿Cómo empezar?"
+            allowfullscreen
+          ></iframe>
+          <div class="p-4">
+            <p class="text-lg font-semibold">
+              Como reciclar en casa: ¿Cómo empezar?
+            </p>
+            <p class="text-sm text-gray-500 mt-1">1.2M Views</p>
+          </div>
+        </div>
+        <!-- Segunda Tarjeta -->
+        <div
+          class="carousel-item relative bg-white shadow-lg rounded-lg overflow-hidden"
+        >
+          <iframe
+            class="w-full h-48"
+            src="https://www.youtube.com/embed/RwMcWAxRdV0"
+            title="Como reciclar en casa"
+            allowfullscreen
+          ></iframe>
+          <div class="p-4">
+            <p class="text-lg font-semibold">Como reciclar en casa</p>
+            <p class="text-sm text-gray-500 mt-1">1.2K Views</p>
+          </div>
+        </div>
+        <!-- Tercera Tarjeta -->
+        <div
+          class="carousel-item relative bg-white shadow-lg rounded-lg overflow-hidden"
+        >
+          <iframe
+            class="w-full h-48"
+            src="https://www.youtube.com/embed/cvakvfXj0KE"
+            title="Reducir, Reutilizar, Reciclar"
+            allowfullscreen
+          ></iframe>
+          <div class="p-4">
+            <p class="text-lg font-semibold">Reducir, Reutilizar, Reciclar</p>
+            <p class="text-sm text-gray-500 mt-1">1.2K Views</p>
+          </div>
+        </div>
+        <!-- Cuarta Tarjeta -->
+        <div
+          class="carousel-item relative bg-white shadow-lg rounded-lg overflow-hidden"
+        >
+          <iframe
+            class="w-full h-48"
+            src="https://www.youtube.com/embed/qtFHb6dAstY"
+            title="Cortometraje"
+            allowfullscreen
+          ></iframe>
+          <div class="p-4">
+            <p class="text-lg font-semibold">Cortometraje</p>
+            <p class="text-sm text-gray-500 mt-1">1.2K Views</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tercera Sección: ODS sobre Medio Ambiente -->
+    <section>
+      <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center mb-8">
+          ODS Más Importantes sobre el Medio Ambiente
+        </h1>
+        <div class="flex flex-col md:flex-row justify-around">
+          <div class="flex flex-col items-center text-center p-4">
+            <img
+              src="imagen/13.png"
+              alt="Objetivo 13: Acción por el clima"
+              class="h-32 w-32 mb-4"
+            />
+            <h2 class="text-xl font-semibold mb-2">Acción por el clima</h2>
+            <p>
+              Tomar medidas urgentes para combatir el cambio climático y sus
+              efectos.
+            </p>
+          </div>
+          <div class="flex flex-col items-center text-center p-4">
+            <img
+              src="imagen/images (1).jpg"
+              alt="Objetivo 14: Vida submarina"
+              class="h-32 w-32 mb-4"
+            />
+            <h2 class="text-xl font-semibold mb-2">Vida submarina</h2>
+            <p>
+              Conservar y utilizar de manera sostenible los océanos, los mares y
+              los recursos marinos.
+            </p>
+          </div>
+          <div class="flex flex-col items-center text-center p-4">
+            <img
+              src="imagen/15.png"
+              alt="Objetivo 15: Vida de ecosistemas terrestres"
+              class="h-32 w-32 mb-4"
+            />
+            <h2 class="text-xl font-semibold mb-2">
+              Vida de ecosistemas terrestres
+            </h2>
+            <p>
+              Proteger, restaurar y promover el uso sostenible de los
+              ecosistemas terrestres.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-[#005B41] text-white py-8">
+      <div class="container mx-auto flex items-center justify-between px-6">
+        <div class="flex items-center">
+          <img
+            alt="EcoPasto logo with green circular arrows"
+            class="h-12 w-12"
+            height="50"
+            src="imagen/logo.png"
+            width="50"
+          />
+          <div class="ml-4">
+            <h1 class="text-3xl font-bold text-white">EcoPasto</h1>
+            <p class="text-sm text-gray-300">Tejiendo un futuro verde.</p>
+          </div>
+        </div>
+        <div class="text-center">
+          <h2 class="text-xl font-bold text-white">Transforma tu Realidad</h2>
+          <p class="text-sm text-gray-300">
+            Explora la atracción de la sostenibilidad en EcoPasto
+          </p>
+        </div>
+        <div class="text-right">
+          <h3 class="text-lg font-bold text-white">CONTACTANOS</h3>
+          <p class="text-sm text-gray-300">ecopasto@gmail.com</p>
+          <p class="text-sm text-gray-300">+313 622 81553</p>
+        </div>
+        <div class="flex space-x-4">
+          <a
+            class="text-[#005B41] bg-green-200 rounded-full p-2"
+            href="https://www.instagram.com"
+            target="_blank"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a
+            class="text-[#005B41] bg-green-200 rounded-full p-2"
+            href="https://www.facebook.com"
+            target="_blank"
+          >
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a
+            class="text-[#005B41] bg-green-200 rounded-full p-2"
+            href="https://www.tiktok.com"
+            target="_blank"
+          >
+            <i class="fab fa-tiktok"></i>
+          </a>
+        </div>
+      </div>
+    </footer>
+    <!-- Chatbot ambiental -->
+    <div id="chatbot">
+      <button id="chat-icon">🤖</button>
+      <div id="chat-window" style="display: none">
+        <div id="messages"></div>
+        <input type="text" id="user-input" placeholder="Haz una pregunta..." />
+        <button id="send-btn">Enviar</button>
+      </div>
+    </div>
+
+    <!-- Botón para accesibilidad -->
+    <button id="accessibilityToggle">Activar Modo de Alta Accesibilidad</button>
+
+    <!-- Script del chatbot y las funciones de EcoPasto -->
+    <script>
+      // Alternar visibilidad del chat
+      document.getElementById("chat-icon").onclick = function () {
+        const chatWindow = document.getElementById("chat-window");
+        chatWindow.style.display =
+          chatWindow.style.display === "none" ? "block" : "none";
+      };
+
+      // Enviar mensaje del usuario y recibir respuesta
+      document.getElementById("send-btn").onclick = function () {
+        const input = document.getElementById("user-input");
+        const userInput = input.value.trim();
+        if (userInput) {
+          addMessage("Usuario: " + userInput);
+          input.value = "";
+
+          // Procesar entrada del usuario y generar respuesta del chatbot
+          const botResponse = getBotResponse(userInput);
+          addMessage("Bot: " + botResponse);
+        }
+      };
+
+      // Función para agregar mensajes al chat
+      function addMessage(message) {
+        const messagesDiv = document.getElementById("messages");
+        messagesDiv.innerHTML += `<div>${message}</div>`;
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      }
+
+      // Funciones de respuesta del chatbot
+      function getBotResponse(input) {
+        const lowerInput = input.toLowerCase();
+        if (lowerInput.includes("reciclaje")) {
+          return "Reciclar consiste en convertir materiales usados en nuevos productos. ¿Sabías que el plástico puede tardar hasta 1000 años en degradarse?";
+        } else if (
+          lowerInput.includes("corregimientos") ||
+          lowerInput.includes("pasto")
+        ) {
+          return "Algunos corregimientos de Pasto son Catambuco, Gualmatán, y Genoy. ¿Quieres saber más sobre alguno en particular?";
+        } else if (lowerInput.includes("medio ambiente")) {
+          return "El medio ambiente es todo lo que nos rodea. Es importante cuidarlo para las futuras generaciones.";
+        } else {
+          return "Lo siento, no tengo una respuesta para eso. ¿Puedes preguntar algo más específico?";
+        }
+      }
+
+      // Función para alternar el modo de alta accesibilidad
+      document.getElementById("accessibilityToggle").onclick = function () {
+        document.body.classList.toggle("accessibility-mode");
+
+        if (document.body.classList.contains("accessibility-mode")) {
+          alert("Modo de alta accesibilidad activado");
+        } else {
+          alert("Modo de alta accesibilidad desactivado");
+        }
+      };
+    </script>
+  </body>
+</html>

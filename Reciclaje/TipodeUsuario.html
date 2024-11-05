@@ -1,0 +1,93 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tipo de usuario</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="imagen/logo.png" type="image/png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <style>
+      .selectable {
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .selectable.selected {
+        background-color: #347928; /* Custom color */
+        color: white;
+      }
+      .selectable.selected i {
+        color: white;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-200 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-10 rounded-lg shadow-lg w-full max-w-3xl">
+      <h1 class="text-2xl font-bold text-gray-800 mb-6">
+        ¿Qué tipo de usuario eres?
+      </h1>
+      <div class="flex justify-center space-x-6 mb-6">
+        <div class="flex flex-col items-center">
+          <div
+            class="bg-white p-6 rounded-lg shadow-md w-32 h-32 flex items-center justify-center selectable"
+            onclick="selectUserType(this)"
+          >
+            <i class="fas fa-trash-alt text-3xl text-[#7AB2D3]"></i>
+          </div>
+          <p class="mt-4 text-gray-800 font-semibold">Recolector</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <div
+            class="bg-white p-6 rounded-lg shadow-md w-32 h-32 flex items-center justify-center selectable"
+            onclick="selectUserType(this)"
+          >
+            <i class="fas fa-user text-3xl text-[#7AB2D3]"></i>
+          </div>
+          <p class="mt-4 text-gray-800 font-semibold">Reciclador</p>
+        </div>
+      </div>
+      <div class="flex justify-between items-center">
+        <button
+          class="bg-gray-100 text-gray-800 py-2 px-6 rounded-full"
+          onclick="window.location.assign('EcoPasto.html')"
+        >
+          Atrás
+        </button>
+        <button
+          class="bg-[#7AB2D3] text-white p-4 rounded-full"
+          onclick="navigateToNextPage()"
+        >
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+      
+      <script>
+        function selectUserType(element) {
+          // Remove 'selected' class from all selectable elements
+          document
+            .querySelectorAll(".selectable")
+            .forEach((el) => el.classList.remove("selected"));
+          // Add 'selected' class to the clicked element
+          element.classList.add("selected");
+        }
+      
+        function navigateBack() {
+          // Navigate to the previous page (replace 'previous-page.html' with the actual URL)
+          window.location.href = "previous-page.html";
+        }
+      
+        function navigateToNextPage() {
+          // Get the selected user type
+          const selectedElement = document.querySelector(".selectable.selected");
+          if (selectedElement) {
+            // Navigate to Registro.html
+            window.location.href = "Registro.html";
+          } else {
+            alert("Por favor, selecciona un tipo de usuario.");
+          }
+        }
+      </script>
+</body>
+</html>      

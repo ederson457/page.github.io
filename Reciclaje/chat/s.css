@@ -1,0 +1,37 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#chatbot {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+#chat-icon {
+    font-size: 40px;
+    background-color: #04879C;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#chat-window {
+    border: 1px solid #055E68;
+    border-radius: 5px;
+    padding: 10px;
+    background: white;
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+    width: 300px;
+}
+
+#messages {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#user-input {
+    width: 70%;
+}

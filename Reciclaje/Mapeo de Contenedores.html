@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mapeo de Contenedores</title>
+    <style>
+        body {
+            background-color: #e8f5e9; /* Light green background */
+            color: #2e7d32; /* Dark green text */
+            font-family: Arial, sans-serif;
+        }
+        #map {
+            height: 840px;
+            width: 100%; /* Ajustar el ancho al 100% del contenedor */
+            max-width: 860px; /* Limitación opcional del ancho máximo */
+            border: 2px solid #2e7d32; /* Dark green border */
+            margin: 20px auto; /* Centrar el mapa horizontalmente */
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #a5d6a7; /* Lighter green background */
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 128, 0, 0.2); /* Green shadow */
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color:black; /* Darker green text */
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #81c784; /* Medium green background */
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        button {
+            background-color: #388e3c; /* Green button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #2e7d32; /* Darker green on hover */
+        }
+        input[type="text"] {
+            padding: 10px;
+            border: 2px solid #4caf50; /* Green border */
+            border-radius: 5px;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+            color: #1b5e20; /* Darker green text */
+        }
+
+    
+    </style>
+</head>
+<body>
+    <div class="title">Mapa de ubicación de los contenedores</div>
+    <p class="text-center text-green-700 mb-4">El mapa interactivo muestra la ubicación exacta de los contenedores de residuos
+      y los puntos de recolección en los corregimientos de Pasto</p>
+    <div class="dropdown">
+        <button>Selecciona un Corregimiento</button>
+        <div class="dropdown-content">
+            <a id="Catambuco" href="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ll=1.1670794489491663, -77.2955923616169&z=15" target="map">Catambuco</a>
+            <a id="Gualmatan" href="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ll=1.1719521242870055, -77.31833197981774&z=14" target="map">Gualmatán</a>
+            <a id="Genoy" href="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ll=1.2725136544760547, -77.33627448654329&z=15" target="map">Genoy</a>
+            <a id="Mapachico" href="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ll=1.2562658206277757, -77.30106946063681&z=15" target="map">Mapachico</a>
+            <a id="Obonuco" href="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ll=1.2034567737543793, -77.29233744400199&z=15" target="map">Obonuco</a>
+            <a id="Santa Bàrbara" href="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ll=1.150090925720444, -77.21784108537345&z=15" target="map">Santa Bàrbara</a>
+            <a id="La Laguna" href="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ll=1.2049935763447508, -77.20989394232876&z=15" target="map">La Laguna</a>
+            <a id="Buesaquillo" href="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ll=1.2107608670962302, -77.24034293545049&z=15" target="map">Buesaquillo</a>
+            <a id="Morasurco" href="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ll=1.253972069842581, -77.23968888045839&z=14" target="map">Morasurco</a>
+            <a id="La Caldera" href="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ll=1.3383457922802815, -77.32770738650686&z=15" target="map">La Caldera</a>
+            <a id="El Encano" href="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ll=1.1625455788948733, -77.15821902481824&z=15" target="map">El Encano</a>
+            <a id="Cabrera" href="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ll=1.2150890725609038, -77.21462844999995&z=14" target="map">Cabrera</a>
+            <a id="San Fernando" href="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ll=1.2031692788443056, -77.22350669175262&z=14" target="map">San Fernando</a>
+            <a id="Mocondino" href="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ll=1.1833118139965515, -77.23320810810299&z=15" target="map">Mocondino</a>
+            <a id="Jamondino" href="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ll=1.1786002469166266, -77.25404495333815&z=15" target="map">Jamondino</a>
+            <a id="Jongovito" href="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ll=1.1847384084649968, -77.28952680037375&z=15" target="map">Jongovito</a>
+            <a id="El Socorro" href="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ll=1.0654289606446703, -77.26213197062522&z=15" target="map">El Socorro</a>
+           
+            <!-- Añade los demás corregimientos aquí de manera similar -->
+        </div>
+    </div>
+    <div id="map">
+        <iframe name="map" src="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ehbc=2E312F&noprof=1" width="860" height="840" frameborder="0" style="border:0"></iframe>
+    </div>
+       <script>
+        function searchLocation() {
+            let location = document.getElementById('searchBox').value;
+            if (location) {
+                let mapHtml = `<iframe name="map" src="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&q=${encodeURIComponent(location)}&z=5" width="640" height="480" frameborder="0" style="border:0" allowfullscreen></iframe>`;
+                document.getElementById('map').innerHTML = mapHtml;
+            }
+        }
+    </script>
+</body>
+</html>

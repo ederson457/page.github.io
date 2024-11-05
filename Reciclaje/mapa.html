@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Ecológico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            color: #2e4c2e;
+        }
+
+        header {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        nav {
+            margin: 10px 0;
+        }
+
+        nav a {
+            margin: 0 15px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        #map {
+            
+            height: 525px;  
+            width: 100%;
+            border: 2px solid #4caf50;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px;
+            background-color: #4caf50;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .info {
+            max-width: 800px;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: #e7f3fe;
+            border-left: 6px solid #2196F3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Mapa Ecológico</h1>
+        <nav>
+            <a href="#map">Mapa</a>
+            <a href="#info">Información</a>
+            <a href="#contact">Contacto</a>
+        </nav>
+    </header>
+
+    <div id="map">
+        <!-- Aquí pega el código de incrustación de Google Maps -->
+        <iframe src="https://www.google.com/maps/d/u/1/embed?mid=1-DkxPiJX_pxMUWAIh4PBQDLEagweJEU&ehbc=2E312F&noprof=1"
+            width="1240" height="520"></iframe>
+    </div>
+
+    <div class="info" id="info">
+        <h2>Información sobre el Mapa</h2>
+        <p>Este mapa muestra diferentes puntos de interés ecológico en nuestra área. Puedes explorar lugares como parques, reservas naturales y otros espacios verdes que son importantes para la conservación del medio ambiente.</p>
+        <p>¡Únete a nosotros en nuestra misión de proteger y preservar la naturaleza!</p>
+    </div>
+
+    <footer id="contact">
+        <p>Contacto: info@mapaecologico.com | Teléfono: 123-456-7890</p>
+        <p>&copy; 2023 Mapa Ecológico. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+
+</html>
